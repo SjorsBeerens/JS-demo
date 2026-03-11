@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <title>Demo 5 - Teller</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#071026 0%,#08182a 60%,#0b0f1a 100%);color:#e6f7ff}
+        .center{height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:24px}
+        .panel{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); padding:36px 48px; border-radius:18px; box-shadow: 0 20px 60px rgba(2,6,23,0.7); display:flex; flex-direction:column; align-items:center; min-width:320px}
+        #count{font-size:8rem;font-weight:800;line-height:0.9; user-select:none; color: #7ef9c5; text-shadow: 0 8px 40px rgba(126,249,197,0.06), 0 0 60px rgba(126,249,197,0.08); transition: transform .18s cubic-bezier(.2,.9,.2,1), text-shadow .18s}
+        #count.pop{transform: scale(1.14); text-shadow: 0 18px 80px rgba(126,249,197,0.22), 0 0 120px rgba(126,249,197,0.18)}
+        .controls{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+        button{padding:10px 16px;border-radius:12px;border:0;cursor:pointer;background:linear-gradient(180deg,#34d399,#059669);color:#02160f;font-weight:700;box-shadow: 0 8px 26px rgba(5,150,105,0.12); transition: transform .12s, box-shadow .12s}
+        button.secondary{background:transparent;color:#cfeee0;border:1px solid rgba(255,255,255,0.04);box-shadow:none}
+        .small{padding:8px 10px;font-size:.95rem;border-radius:10px}
+        button:active{transform: translateY(2px) scale(.995)}
+        .status{margin-top:12px;font-size:0.95rem;color:#93c5fd;opacity:.95}
+        @media (max-width:420px){#count{font-size:5.2rem;padding:0 6px}.panel{padding:24px}}
+    </style>
+</head>
+<body>
+    <div class="center">
+        <div class="panel">
+            <div id="count">0</div>
+            <div class="controls">
+                <button id="startBtn">Start</button>
+                <button id="stopBtn" class="secondary">Stop</button>
+                <button id="clickToggle" class="small">Enable Click +1</button>
+                <button id="audioToggle" class="small">Enable Mic</button>
+                <button id="resetBtn" class="secondary small">Reset</button>
+            </div>
+            <div class="status" id="status">Status: stopped</div>
+            <div style="width:100%;margin-top:12px;display:flex;align-items:center;gap:10px;">
+                <div style="flex:1;background:rgba(255,255,255,0.03);height:8px;border-radius:6px;overflow:hidden">
+                    <div id="micFill" style="height:100%;width:0%;background:linear-gradient(90deg,#7ef9c5,#60a5fa);box-shadow:0 6px 26px rgba(96,165,250,0.08);transition:width .06s linear"></div>
+                </div>
+                <div id="micLbl" style="min-width:72px;text-align:right;color:#9fd9ff;font-size:.9rem;opacity:.9">mic: off</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="demo5.js"></script>
+</body>
+</html>
