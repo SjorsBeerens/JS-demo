@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <title>Demo 6 — API Shapes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="shared.css">
+</head>
+<body class="demo6">
+    <div class="container">
+        <h1>Demo 6 — API Shapes (PokéAPI)</h1>
+        <p>Haalt een willekeurige Pokémon via de <a href="https://pokeapi.co" target="_blank">PokéAPI</a> en gebruikt de data om vormen, kleuren en stijlen te genereren.</p>
+
+        <div class="demo-row">
+            <canvas id="art" width="640" height="480"></canvas>
+
+            <div class="info">
+                <div class="meta">
+                    <h2 id="name">—</h2>
+                    <div id="types"></div>
+                    <p id="desc">Klik op "Nieuwe Pokémon" om te starten.</p>
+                    <div class="controls">
+                        <button id="newBtn">Nieuwe Pokémon</button>
+                    </div>
+                    <pre id="raw" class="ex-inline-5"></pre>
+                </div>
+            </div>
+        </div>
+
+        <p class="ex-inline-6"><a href="index.html">Terug naar overzicht</a></p>
+    </div>
+
+    <script src="demo6.js"></script>
+</body>
+</html>
