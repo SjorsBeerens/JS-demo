@@ -1,7 +1,6 @@
 (function() {
   const countEl = document.getElementById('count');
-  const startBtn = document.getElementById('startBtn');
-  const stopBtn = document.getElementById('stopBtn');
+  const toggleBtn = document.getElementById('toggleBtn');
   const resetBtn = document.getElementById('resetBtn');
   const clickToggle = document.getElementById('clickToggle');
   const audioToggle = document.getElementById('audioToggle');
@@ -23,16 +22,25 @@
     if (intervalId) return;
     intervalId = setInterval(() => { count++; render(); }, 1000);
     statusEl.textContent = 'Status: running';
+    updateToggleButton();
   }
 
   function stopCounter() {
     if (!intervalId) return;
     clearInterval(intervalId); intervalId = null;
     statusEl.textContent = 'Status: stopped';
+    updateToggleButton();
   }
 
-  startBtn.addEventListener('click', () => startCounter());
-  stopBtn.addEventListener('click', () => stopCounter());
+  function updateToggleButton() {
+    if (!toggleBtn) return;
+    toggleBtn.textContent = intervalId ? 'Stop' : 'Start';
+    toggleBtn.classList.toggle('secondary', !!intervalId);
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    if (intervalId) stopCounter(); else startCounter();
+  });
   resetBtn.addEventListener('click', () => { count = 0; render(); });
 
   clickToggle.addEventListener('click', () => {
