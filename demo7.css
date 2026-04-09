@@ -31,7 +31,7 @@ h1{
 }
 .codecons:hover{ color: #fff; }
 
-.beer_wrapper{ width:100%; }
+.beer_wrapper{ width:100%; display:flex; align-items:center; justify-content:center; height:100%; }
 
 /* Demo-specific container override: remove white background/border and shadow */
 .demo7 .container {
@@ -40,9 +40,22 @@ h1{
 	padding: 28px; /* keep spacing similar to original demo layout */
 }
 
+/* Make the demo scene an absolute frame so page layout below (slider) isn't pushed down. */
+#scene, .demo7-scene {
+	position: absolute;
+	inset: 0; /* top:0; right:0; bottom:0; left:0; */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	pointer-events: auto;
+}
+
 .bottle{
-	margin: 140px auto;
-	position: relative;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
 	width: 200px;
 	height: 300px;
 	border-style: none solid solid solid;
@@ -179,7 +192,41 @@ h1{
 
 .bottle.wig{ animation: beer-wiggle .8s ease-in-out; }
 
-@keyframes beer-wiggle{ 0%{ transform: rotate(0deg);} 20%{ transform: rotate(14deg);} 60%{ transform: rotate(-12deg);} 100%{ transform: rotate(0deg);} }
+@keyframes beer-wiggle{ 0%{ transform: var(--cx, translate(-50%,-50%)) rotate(0deg);} 20%{ transform: var(--cx, translate(-50%,-50%)) rotate(14deg);} 60%{ transform: var(--cx, translate(-50%,-50%)) rotate(-12deg);} 100%{ transform: var(--cx, translate(-50%,-50%)) rotate(0deg);} }
 
 /* small grid background from original demo (keeps visual depth) */
 .demo7 .bg-grid { position: absolute; inset: 0; background-image: none; background-size: 40px 40px; mix-blend-mode: overlay; opacity: .9; z-index: 0; }
+
+/* bootcamp_ufo keyframes (copied exactly) */
+/* bootcamp_ufo keyframes (adapted to keep hover centered) */
+@keyframes hovering {
+	from { transform: var(--cx, translateX(-50%)) translateY(0px); }
+	to   { transform: var(--cx, translateX(-50%)) translateY(-20px); }
+}
+
+@keyframes flying {
+	/* use translateX relative to centered base so hover stays centered */
+	0%   { transform: var(--cx, translateX(-50%)) translateX(-520px) rotate(20deg); }
+	20%,80% { transform: var(--cx, translateX(-50%)) translateX(-520px) rotate(20deg); }
+	30%,70% { transform: var(--cx, translateX(-50%)) translateX(0px) rotate(0deg); }
+	100% { transform: var(--cx, translateX(-50%)) translateX(1400px) rotate(20deg); }
+}
+
+/* apply the bootcamp hovering by default while keeping the bottle centered
+   and only enable the full flying path when `.fly` is present. */
+.bottle{
+	--cx: translate(-50%,-50%);
+	transform: var(--cx);
+	animation-name: hovering;
+	animation-duration: 0.4s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+	animation-direction: alternate;
+}
+
+.bottle.fly{
+	animation-name: flying;
+	animation-duration: 3s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
