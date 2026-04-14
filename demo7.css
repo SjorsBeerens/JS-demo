@@ -238,10 +238,21 @@ h1{
 }
 
 @keyframes flying {
-	0%              { left:-520px;rotate:20deg;  }
-	20%,80%         { rotate:20deg;  }
-	30%,70%         { left:calc(50% - 130px);rotate:0deg; }
-	100%            { left:calc(100% + 260px);rotate:20deg; }   
+	0% {
+		transform: translate(-520px, 0px) rotate(0deg);
+	}
+	25% {
+		transform: translate(25vw, -20px) rotate(90deg);
+	}
+	50% {
+		transform: translate(50vw, 0px) rotate(180deg);
+	}
+	75% {
+		transform: translate(75vw, 20px) rotate(270deg);
+	}
+	100% {
+		transform: translate(100vw, 0px) rotate(360deg);
+	}
 }
 
 
@@ -258,12 +269,7 @@ h1{
 }
 
 .bottle.fly {
-	top:40%;
-	left:-520px;
-	transform: none;
-	animation-name: hovering, flying;
-	animation-duration: 0.4s, 3s;
-	animation-iteration-count: infinite, infinite;
-	animation-timing-function: ease-in-out, ease-in-out;
-	animation-direction: alternate, normal;
+	top: 40%;
+	left: 0;
+	animation: flying 4s linear infinite;
 }
