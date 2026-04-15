@@ -1,8 +1,8 @@
 {
 	"name": "Demos",
 	"short_name": "demo",
-	"start_url": "./index.html",
-	"scope": "./",
+	"start_url": "https://i546732.hera.fontysict.net/JSDemos/index.html",
+	"scope": "https://i546732.hera.fontysict.net/JSDemos/",
 	"display": "standalone",
 	"orientation": "any",
 	"background_color": "#2EC6FE",

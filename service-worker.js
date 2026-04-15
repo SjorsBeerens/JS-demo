@@ -1,4 +1,4 @@
-const CACHE_NAME = 'js-demo-pwa-v1';
+const CACHE_NAME = 'js-demo-pwa-v2';
 const ASSETS = [
   'index.html',
   'shared.css',
