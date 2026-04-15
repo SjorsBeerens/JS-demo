@@ -1,23 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300i,400,600,700,800');
-
 html, body{
 	background: #ffe100;
 	background: linear-gradient(180deg, rgba(255, 225, 0, 1) 0%, rgba(255, 255, 255, 1) 90%);
 	padding: 0;
 	margin: 0;
-	font-family: 'Open Sans', sans-serif;
 	height: 100%;
 }
 
-h1{
-	text-align: center;
-	color: white;
-	font-size: 46px;
-	text-shadow: 0px 1px black;
-	width: 500px;
-	margin: 90px auto;
-	font-weight: 800;
-}
 
 .codecons{
 	position: absolute;
@@ -130,7 +118,7 @@ h1{
 	z-index: 12;
 }
 
-.bottle .foam-1, .bottle .foam-2, .bottle .foam-3, .bottle .foam-4, .nottle .foam-5, .bottle .foam-6, .bottle .foam-7 {
+.bottle .foam-1, .bottle .foam-2, .bottle .foam-3, .bottle .foam-4, .bottle .foam-5, .bottle .foam-6, .bottle .foam-7 {
 	float: left;
 	position: absolute;
 	z-index: 8;

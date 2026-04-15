@@ -2,8 +2,14 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#317EFB">
     <title>JS Demo Home</title>
     <link rel="stylesheet" href="shared.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon512_rounded.png" type="image/png">
+    <link rel="apple-touch-icon" href="icon512_maskable.png">
+    <meta name="msapplication-TileImage" content="icon512_rounded.png">
 </head>
 <body>
     <div class="container">
@@ -16,5 +22,14 @@
         <button class="demo-btn" onclick="location.href='demo6.html'">Demo 6: API Demo (Pokémon shapes & styles)</button>
         <button class="demo-btn" onclick="location.href='demo7.html'">Demo 7: Animaties (@keyframes)</button>
     </div>
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('service-worker.js')
+                        .then(function(reg){ console.log('Service worker registered.', reg); })
+                        .catch(function(err){ console.error('Service worker registration failed:', err); });
+                });
+            }
+        </script>
 </body>
 </html>
