@@ -62,6 +62,10 @@
     async function loadAndRender(){
         try{
             resizeCanvas();
+            // ensure normal UI visible
+            document.getElementById('offlineFallback').classList.remove('show');
+            canvas.style.display = '';
+            const infoEl = document.querySelector('.info'); if(infoEl) infoEl.style.display = '';
             nameEl.textContent = 'Laden...';
             const id = pickRandomId();
             const data = await fetchPokemon(id);
@@ -94,9 +98,73 @@
             if(spriteUrl) drawSpriteCentered(spriteUrl, size);
         }catch(err){
             console.error(err);
-            nameEl.textContent = 'Fout bij laden';
-            ctx.clearRect(0,0,canvas.width,canvas.height);
+                // Always show the friendly offline fallback when a fetch error occurs
+                showOfflineFallback();
         }
+    }
+
+    function showOfflineFallback(){
+        // hide canvas and info pane
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        canvas.style.display = 'none';
+        const infoEl = document.querySelector('.info'); if(infoEl) infoEl.style.display = 'none';
+
+        const fb = document.getElementById('offlineFallback');
+                fb.innerHTML = '';
+                fb.classList.add('show');
+                fb.setAttribute('aria-hidden', 'false');
+
+                // Try to show bundled pikachu.png first; fall back to SVG if not available
+                const img = document.createElement('img');
+                img.alt = 'Pikachu';
+                img.style.maxWidth = '320px';
+                img.style.width = '60%';
+                img.style.borderRadius = '8px';
+                img.src = 'pikachu.png';
+
+                const appendMessageAndRetry = (container)=>{
+                        const h2 = document.createElement('h2'); h2.textContent = 'Geen verbinding met de API';
+                        const p = document.createElement('p'); p.textContent = 'Helaas kan ik nu geen Pokémon laden — er is geen connectie met de API.';
+                        const btn = document.createElement('button'); btn.id = 'retryOffline'; btn.className = 'retry-btn'; btn.textContent = 'Opnieuw proberen';
+                        container.appendChild(h2); container.appendChild(p); container.appendChild(btn);
+                        btn.addEventListener('click', ()=>{
+                                fb.classList.remove('show');
+                                fb.setAttribute('aria-hidden','true');
+                                canvas.style.display = '';
+                                const infoEl2 = document.querySelector('.info'); if(infoEl2) infoEl2.style.display = '';
+                                loadAndRender();
+                        });
+                };
+
+                img.onload = ()=>{
+                        fb.appendChild(img);
+                        appendMessageAndRetry(fb);
+                };
+                img.onerror = ()=>{
+                        // fallback to inline SVG when image not present
+                        const svg = document.createElement('div');
+                        svg.innerHTML = `
+                        <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pikachu icon">
+                            <rect width="220" height="220" rx="20" fill="#FFF7C6"/>
+                            <g transform="translate(20,10)">
+                                <ellipse cx="90" cy="100" rx="70" ry="60" fill="#FFD94A" stroke="#E6B800" stroke-width="3"/>
+                                <circle cx="55" cy="90" r="8" fill="#111" />
+                                <circle cx="125" cy="90" r="8" fill="#111" />
+                                <circle cx="45" cy="115" r="12" fill="#FF6B6B" />
+                                <circle cx="135" cy="115" r="12" fill="#FF6B6B" />
+                                <path d="M80 120 q10 12 20 0" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                <polygon points="10,45 30,10 45,50" fill="#FFD94A" stroke="#E6B800" stroke-width="3" />
+                                <polygon points="170,45 150,10 135,50" fill="#FFD94A" stroke="#E6B800" stroke-width="3" />
+                            </g>
+                        </svg>
+                        `;
+                        fb.appendChild(svg);
+                        appendMessageAndRetry(fb);
+                };
+
+                // start loading image
+                // if image file doesn't exist in project, onerror will trigger and we fallback to SVG
+                // note: for the service worker to cache the image, ensure it's present and SW updated
     }
 
     window.addEventListener('resize', ()=>{

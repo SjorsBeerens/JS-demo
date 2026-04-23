@@ -8,6 +8,7 @@ const ASSETS = [
   'demo4.html','demo4.js',
   'demo5.html','demo5.js',
   'demo6.html','demo6.js',
+  'pikachu.png',
   'demo7.html','demo7.js','demo7.css',
   'icon512_maskable.png','icon512_rounded.png',
   'manifest.json'
@@ -43,20 +44,19 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
-  // Offline-first (cache-first) for same-origin resources: return cache if present,
-  // otherwise fetch from network and cache the response for future use.
+  // Network-first for same-origin resources: try network, cache successful responses,
+  // and fall back to cache (or navigation fallback) when the network fails.
   if (url.origin === location.origin) {
     event.respondWith(
-      caches.match(event.request).then(cached => {
-        if (cached) return cached;
-        return fetch(event.request).then(response => {
-          if (response && response.status === 200) {
-            const respClone = response.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, respClone));
-          }
-          return response;
-        }).catch(() => {
-          // navigation fallback to index.html when offline
+      fetch(event.request).then(response => {
+        if (response && response.status === 200) {
+          const respClone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, respClone));
+        }
+        return response;
+      }).catch(() => {
+        return caches.match(event.request).then(cached => {
+          if (cached) return cached;
           if (event.request.mode === 'navigate' || (event.request.headers && event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html'))) {
             return caches.match('index.html');
           }
@@ -66,7 +66,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // For cross-origin requests, try network first then cache fallback
+  // For cross-origin requests, keep network-first then cache fallback
   event.respondWith(
     fetch(event.request).then(response => response).catch(() => caches.match(event.request))
   );

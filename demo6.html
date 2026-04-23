@@ -6,6 +6,14 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="shared.css">
     <script src="demo6.js" defer></script>
+    <style>
+        .offline-fallback{display:none;padding:18px;flex:1;width:100%;box-sizing:border-box}
+        .offline-fallback.show{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+        .offline-fallback img,.offline-fallback svg{width:220px;height:220px;max-width:80vw;object-fit:contain}
+        .offline-fallback h2{margin:0;font-size:1.25rem}
+        .offline-fallback p{color:#333;margin:4px 0 0}
+        .offline-fallback .retry-btn{margin-top:8px;padding:8px 12px;border-radius:6px;border:0;background:#f7d02c;color:#111;cursor:pointer}
+    </style>
 </head>
 <body class="demo6">
     
@@ -18,6 +26,8 @@
     <p class="ex-inline-6"><a href="index.html">Terug naar overzicht</a></p>
         <section class="demo-row">
             <canvas id="art" width="640" height="480"></canvas>
+
+            <div id="offlineFallback" class="offline-fallback" aria-hidden="true"></div>
 
             <div class="info">
                 <div class="meta">
