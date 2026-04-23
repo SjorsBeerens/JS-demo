@@ -1,5 +1,6 @@
 const CACHE_NAME = 'js-demo-pwa-v2';
 const ASSETS = [
+  './',
   'index.html',
   'shared.css',
   'demo1.html','demo1.js',
